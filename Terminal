@@ -1,0 +1,52 @@
+#!/usr/bin/env perl
+use lib './lib';
+
+use Mojolicious::Lite;
+
+use Terminal;
+use JSON;
+
+get '/' => sub {
+    $_[0]->render(template => 'index');
+};
+
+websocket '/socket' => sub {
+    my $self = shift;
+
+    my $terminal = Terminal->new(cmd => '/bin/bash', app => $self->app);
+
+    $terminal->on(
+        row_changed => sub {
+            my ($event, $message) = @_;
+
+            $self->send({json => {stdout => $message}});
+        }
+    );
+
+    $self->on(
+        json => sub {
+            my ($self, $message) = @_;
+
+            if (exists $message->{'screen'}) {
+                my $screen = $message->{'screen'};
+
+                $self->app->log->debug(
+                    "setting screen size to $screen->{'rows'} X  $screen->{'cols'}");
+                $terminal->resize($screen->{'rows'}, $screen->{'cols'});
+            }
+
+            $terminal->write($message->{'stdin'}) if exists $message->{'stdin'};
+        }
+    );
+
+    $self->on(
+        finish => sub {
+            $self->app->log->debug('Client disconnected');
+            $terminal->cleanup();
+        }
+    );
+
+    $terminal->start() unless $terminal->is_spawned;
+};
+
+app->start;

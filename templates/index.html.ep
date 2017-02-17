@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/js/term.js"></script>
+    <script src="/js/client.js"></script>
+    <style type="text/css">
+        html {
+            background: #555;
+        }
+
+        h1 {
+           margin-bottom: 20px;
+           font: 20px/1.5 sans-serif;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var termRowHeight = 0.0 + 1.00*document.getElementById("dummy-screen").offsetHeight / 25;
+            var termColWidth = 0.0 + (1.02*document.getElementById("dummy-screen-rows").offsetWidth / 80);
+            document.getElementById("dummy-screen").setAttribute("style", "display: none");
+
+            function calculate_size(element) {
+                var rows = Math.max(2, Math.floor(element.innerHeight/termRowHeight)-1);
+                var cols = Math.max(3, Math.floor(element.innerWidth/termColWidth)-1);
+                console.log("resize:", termRowHeight, termColWidth, element.innerHeight,
+                                        element.innerWidth, rows, cols);
+                return {rows: rows, cols: cols};
+            }
+
+            size = calculate_size(window);
+            var terminal = client.run({
+                parent: document.body,
+                remote: "<%= url_for('socket')->to_abs->scheme('ws') %>",
+                screen: size
+            });
+
+            window.onresize = function() { 
+                var geom = calculate_size(window);
+                terminal.term.resize(geom.cols, geom.rows);
+                terminal.socket.send(JSON.stringify({"screen":{"cols": geom.cols, "rows": geom.rows}}));
+            };
+        };
+    </script>
+</head>
+<body>
+<pre id="dummy-screen" style="visibility:hidden; border: white solid 5px; font-family: &quot;DejaVu Sans Mono&quot;, &quot;Liberation Mono&quot;, monospace; font-size: 11px;">0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+1
+2
+3
+<span id="dummy-screen-rows" style="visibility:hidden;">01234567890123456789012345678901234567890123456789012345678901234567890123456789</span>
+</pre>
+</body>
+</html>
