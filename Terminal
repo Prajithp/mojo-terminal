@@ -2,9 +2,7 @@
 use lib './lib';
 
 use Mojolicious::Lite;
-
 use Terminal;
-use JSON;
 
 get '/' => sub {
     $_[0]->render(template => 'index');
@@ -12,6 +10,8 @@ get '/' => sub {
 
 websocket '/socket' => sub {
     my $self = shift;
+
+    Mojo::IOLoop->stream($self->tx->connection)->timeout(0);
 
     my $terminal = Terminal->new(cmd => '/bin/bash', app => $self->app);
 
