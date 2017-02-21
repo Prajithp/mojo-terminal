@@ -3,39 +3,43 @@ use lib './lib';
 
 use Mojolicious::Lite;
 use Terminal;
+use IO::File;
 
 get '/' => sub {
-    $_[0]->render(template => 'index');
+    $_[0]->render( template => 'index' );
 };
 
 websocket '/socket' => sub {
     my $self = shift;
 
-    Mojo::IOLoop->stream($self->tx->connection)->timeout(0);
+    Mojo::IOLoop->stream( $self->tx->connection )->timeout(0);
 
-    my $terminal = Terminal->new(cmd => '/bin/bash', app => $self->app);
+    my $terminal = Terminal->new( cmd => '/bin/bash', app => $self->app );
 
     $terminal->on(
         row_changed => sub {
-            my ($event, $message) = @_;
+            my ( $event, $message ) = @_;
 
-            $self->send({json => {stdout => $message}});
+            $self->send(
+                { json => { stdout => $message, type => 'terminal' } } );
         }
     );
 
     $self->on(
         json => sub {
-            my ($self, $message) = @_;
+            my ( $self, $message ) = @_;
 
-            if (exists $message->{'screen'}) {
+            if ( exists $message->{'screen'} ) {
                 my $screen = $message->{'screen'};
 
                 $self->app->log->debug(
-                    "setting screen size to $screen->{'rows'} X  $screen->{'cols'}");
-                $terminal->resize($screen->{'rows'}, $screen->{'cols'});
+                    "setting screen size to $screen->{'rows'} X  $screen->{'cols'}"
+                );
+                $terminal->resize( $screen->{'rows'}, $screen->{'cols'} );
             }
 
-            $terminal->write($message->{'stdin'}) if exists $message->{'stdin'};
+            $terminal->write( $message->{'stdin'} )
+                if exists $message->{'stdin'};
         }
     );
 

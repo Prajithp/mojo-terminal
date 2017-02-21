@@ -1,4 +1,5 @@
 var client = {};
+var terminalContainer = document.getElementById('terminal-container');
 
 client.run = function (options) {
 
@@ -7,16 +8,15 @@ client.run = function (options) {
 
         var socket = new WebSocket(options.remote);
         var term = new Terminal({
-            rows: options.screen.rows,
-            cols: options.screen.cols,
-            screenKeys: true,
             cursorBlink: true,
-            useStyle: true,
         });
+        term.open(terminalContainer);
+        term.fit();
+        var cols = term.cols,
+            rows = term.rows;
 
-        term.open(options.parent || document.body);
         socket.onopen = function(e) {
-            socket.send(JSON.stringify({"screen":{"cols": options.screen.cols, "rows": options.screen.rows}}));
+            socket.send(JSON.stringify({"screen":{"cols": cols, "rows": rows}}));
 
             term.on('data', function(data) {
                 socket.send(JSON.stringify({'stdin':data}));
@@ -24,11 +24,18 @@ client.run = function (options) {
 
             socket.onmessage = function(event) {
                 json_msg = JSON.parse(event.data);
-                term.write(json_msg.stdout);
+                var type = json_msg.type;
+                switch (type) { 
+                    case 'loadavg':
+                        document.getElementById('uptime').innerHTML = "loadavg: " + json_msg.stdout;
+                        break;
+                    case 'terminal':
+                        term.write(json_msg.stdout);
+                        break;  
+                }
             };
-
             socket.onclose = function() {
-                term.destroy();
+                //term.destroy();
             };
         };
         return {'socket': socket, 'term': term};
