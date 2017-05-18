@@ -4,10 +4,10 @@
 -->
 <head>
   <title>#!/bin/bash</title>
-  <link rel="stylesheet" href="/xterm/xterm.css" />
-  <link rel="stylesheet" href="/xterm/style.css" />
-  <script src="/xterm/xterm.js"></script>
-  <script src="/xterm/addons/fit/fit.js"></script>
+  <link rel="stylesheet" href="/css/xterm.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/xterm.js"></script>
+  <script src="/js/addons/fit/fit.js"></script>
 </head>
 <body>
   <div class="box">

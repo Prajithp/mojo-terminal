@@ -16,7 +16,7 @@ sub new {
 
     $self->{created} = time;
 
-    $self->{cmd} ||= '/bin/sh';
+    $self->{cmd} ||= '/bin/bash';
     $self->{app} ||= sub { };
 
     $self->init;
@@ -68,7 +68,8 @@ sub read {
     my ($chunk) = @_;
 
     $self->app->log->debug("got chunk from fd");
-    $self->emit('row_changed', Encode::encode('UTF-8', $chunk));
+    $chunk = Encode::decode('UTF-8', $chunk);
+    $self->emit('row_changed', $chunk);
 }
 
 sub write {

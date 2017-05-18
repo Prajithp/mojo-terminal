@@ -6,7 +6,8 @@ use Terminal;
 use IO::File;
 
 get '/' => sub {
-    $_[0]->render( template => 'index' );
+    my $self = shift;
+    $self->render( template => 'index' );
 };
 
 websocket '/socket' => sub {
