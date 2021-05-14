@@ -4,10 +4,9 @@ Interactive bash terminal served by Mojolicious &amp;  websockets
 ## Installation 
 ### docker:
  ```
- $> docker build -t alertmanager-webook .
- $> docker run -d --name alertmanager-webook \
-    -p 8080:8080 --restart=unless-stopped \
-    -v $(pwd)/alerts.yaml:/app/alerts.yaml alertmanager-webook:latest
+ $> docker build -t mojo-terminal .
+ $> docker run -ti --name mojo-terminal \
+    -p 8080:8080 mojo-terminal:latest
  ```
 
 ### Install manually:
