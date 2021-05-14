@@ -1,45 +1,175 @@
-body {
-    font-family: helvetica, sans-serif, arial;
-    font-size: 1em;
-    color: #111;
-    background-color: rgb(0, 0, 0);
-    color: rgb(240, 240, 240);
-    height: 100%;
-    margin: 0;
+#tabs {
+	position: absolute;
+	top: 42%;
 }
 
-#header {
-    color: rgb(240, 240, 240);
-    background-color: rgb(0, 128, 0);
-    width: 100%;
-    border-color: white;
-    border-style: none none solid none;
-    border-width: 1px;
-    text-align: center;
-    flex: 0 1 auto;
-    z-index: 99;
+.tab {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: initial;
+	top: 10px;
+	padding: 10px;
+	height: 16px;
+	width: 75px;
+	font-size: 14px;
+	font-family: "Montserrat";
 }
 
-.box {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
+.tab:hover {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: initial;
+	top: 10px;
+	padding: 10px;
+	height: 16px;
+	width: 75px;
+	color: white;
 }
 
-#terminal-container {
-    flex: 1 1 auto;
-    width: 100%;
-    margin: 0 auto;
-    padding: 2px;
+.selectedtab {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: initial;
+	background-color: rgb(37, 37, 39);
+	padding: 5px;
+	border-bottom: 1px;
+	border-bottom-color: #59FF00;
+	border-bottom-style: solid;
+	border-top: 1px;
+	border-top-color: #353535;
+	border-top-style: solid;
+	width: 75px;
+	font-size: 14px;
+	font-family: "Montserrat";
 }
 
-#terminal-container .terminal {
-    background-color: #000000;
-    color: #fafafa;
-    padding: 2px;
+.selectedtab:hover {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: initial;
+	top: 10px;
+	background-color: rgb(37, 37, 39);
+	padding: 10px;
+	border-bottom: 2px;
+	border-bottom-color: #59FF00;
+	border-bottom-style: solid;
+	border-top: 1px;
+	border-top-color: #353535;
+	border-top-style: solid;
+	height: 10px;
+	width: 75px;
+	font-size: 14px;
+	font-family: "Montserrat";
+	color: white;
+}
+#top {
+	position: fixed;
+	color: #8cff76;
+	top: 0;
+	left: 0;
+	padding: 10px;
+	width: 100%;
+	height: 34px;
+	background-color: rgb(30, 30, 33);
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: rgb(20, 20, 26);
+	z-index: 1;
+}
+#window {
+	top: 55px;
+	height: 100%; 
+	left: 0;
+	position: fixed;
+	width: 100%;
 }
 
-#terminal-container .terminal:focus .terminal-cursor {
-    background-color: #fafafa;
+.close-btn {
+	top: 1px;
+	right: 1px;
+	color: #8cff76;
+	background-color: rgba(0, 0, 0, 0);
+	font-size: 16px;
+	border-style: none;
+	padding: 10;
+}
+
+.close-btn:hover {
+	top: 1px;
+	right: 1px;
+	color: #7f3835;
+	background-color: rgba(0, 0, 0, 0);
+	font-size: 16px;
+	border-style: none;
+	padding: 10;
+}
+
+#newtab {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	color: #3a3a3a;
+	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+	position: absolute;
+	font-size: 28px;
+	left: 105%;
+	top: -8px;
+}
+
+#newtab:hover {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	color:  #da6a02;
+	font-weight: bold;
+	font-family: 'Open Sans', sans-serif;
+	position: absolute;
+	font-size: 28px;
+	left: 105%;
+	top: -8px;
+}
+
+::-webkit-scrollbar {
+	background-color: #1d1f21;
+	width: 7px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #1d1f21;
+	width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #353535;
+	width: 7px;
+	border-color: #20201d;
+}
+
+.win {
+	width: 100%;
+	height: 100%;
+}
+
+.win .terminal {
+	padding-bottom:50px;
 }
 

@@ -1,6 +1,4 @@
 var client = {};
-var terminalContainer = document.getElementById('terminal-container');
-
 client.run = function (options) {
 
 	options = options || {};
@@ -10,7 +8,7 @@ client.run = function (options) {
         var term = new Terminal({
             cursorBlink: true,
         });
-        term.open(terminalContainer);
+        term.open(options.target);
         term.fit();
         var cols = term.cols,
             rows = term.rows;
