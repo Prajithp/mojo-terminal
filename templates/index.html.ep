@@ -1,23 +1,34 @@
-<html>
-<!--
-    https://github.com/billchurch/WebSSH2/
--->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>#!/bin/bash</title>
-  <link rel="stylesheet" href="/css/xterm.css" />
-  <link rel="stylesheet" href="/css/style.css" />
-  <script src="/js/xterm.js"></script>
-  <script src="/js/addons/fit/fit.js"></script>
+    <meta charset="UTF-8">
+    <title>#!/bin/bash</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:300i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+    <link rel="stylesheet" href="/css/xterm.css"/>
+
+    <script src="/js/xterm.js"></script>
+    <script src="/js/addons/fit/fit.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-  <div class="box">
-    <div id="terminal-container" class="terminal"></div>
-  </div>
-  <script src="/js/client.js"></script>
-  <script>
-      var terminal = client.run({
-          remote: "<%= url_for('socket')->to_abs->scheme('ws') %>",
-      });
-  </script>
+    <div id="top">
+        <div id="tabs">
+            <span id="newtab">+</span>
+        </div>
+    </div>
+    <div id="window"></div>
+    <script src="/js/app.js"></script>
+    <script>
+        document.getElementById('newtab').addEventListener('click', () => {
+	        Session.Init("Terminal", "<%= url_for('socket')->to_abs->scheme('ws') %>");
+        });
+        document.getElementById('newtab').click()
+    </script>
 </body>
 </html>
