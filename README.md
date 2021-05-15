@@ -16,7 +16,7 @@ cpanm --installdeps .
 ```
 start the application with hypnotoad
 ```
-hypnotoad alertmanager.pl
+hypnotoad -f Terminal
 ```
 
 
