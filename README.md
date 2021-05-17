@@ -1,5 +1,8 @@
 # mojo-terminal
-Interactive bash terminal served by Mojolicious &amp;  websockets 
+Interactive terminal over HTTP/HTTPS served by Mojolicious &amp;  websockets.
+
+![mojo-terminal](./public/x1.png?raw=true)
+
 
 ## Installation 
 ### docker:
